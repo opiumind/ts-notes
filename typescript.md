@@ -1,4 +1,5 @@
-(From https://www.typescriptlang.org/docs/handbook)
+# TypeScript
+(notes on https://www.typescriptlang.org/docs/handbook)
 
 ## Array
 
