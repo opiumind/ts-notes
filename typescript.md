@@ -484,10 +484,10 @@ let reverse = function <U>(y: U): U {
 identity = reverse; // OK, because (x: any) => any matches (y: any) => any
 ```
 * Table of type compatibility https://www.typescriptlang.org/docs/handbook/type-compatibility.html
-        - Everything is assignable to itself.
-        - any and unknown are the same in terms of what is assignable to them, different in that unknown is not assignable to anything except any.
-        - unknown and never are like inverses of each other. Everything is assignable to unknown, never is assignable to everything. Nothing is assignable to never, unknown is not assignable to anything (except any).
-        - void is not assignable to or from anything, with the following exceptions: any, unknown, never, undefined, and null
+- - Everything is assignable to itself.
+- - any and unknown are the same in terms of what is assignable to them, different in that unknown is not assignable to anything except any.
+- - unknown and never are like inverses of each other. Everything is assignable to unknown, never is assignable to everything. Nothing is assignable to never, unknown is not assignable to anything (except any).
+- - void is not assignable to or from anything, with the following exceptions: any, unknown, never, undefined, and null
 
 
 ## Advanced Types
@@ -662,7 +662,7 @@ import zip = require("./ZipCodeValidator");
 * In Type Script we only can load a module under some conditions (different syntax in different libraries: Node.js, require.js, System.js, etc.)
 * To describe the shape of libraries not written in TypeScript, we need to declare the API that the library exposes: in .d.ts files. See https://www.typescriptlang.org/docs/handbook/modules.html
 * Export as close to top-level as possible:
-        - If you’re only exporting a single class or function, use export default:
+- - If you’re only exporting a single class or function, use export default:
 ```
 //MyClass.ts
 export default class SomeType {
@@ -675,7 +675,7 @@ import f from "./MyFunc";
 let x = new t();
 console.log(f());
 ```
-        - If you’re exporting multiple objects, put them all at top-level:
+- - If you’re exporting multiple objects, put them all at top-level:
 ```
 //MyThings.ts
 export class SomeType {
@@ -685,13 +685,13 @@ export function someFunc() {
   /* ... */
 }
 ```
-        - Explicitly list imported names:
+- - Explicitly list imported names:
 ```
 import { SomeType, someFunc } from "./MyThings";
 let x = new SomeType();
 let y = someFunc();
 ```
-        - Use the namespace import pattern if you’re importing a large number of things
+- - Use the namespace import pattern if you’re importing a large number of things
 ```
 //MyLargeModule.ts
 export class Dog { ... }
@@ -787,8 +787,8 @@ import { Component } from "@angular/core";
 * Node resolution (`var x = require("./moduleB");`) for relative resolution: file name -> package.json in the folder -> index.js in the folder 
 * Node resolution for non-relative resolution: all steps above in each directory all the way up
 * Additional module resolution flags:
-        - "baseUrl", informs the compiler where to find modules. Given path is relative, it is computed based on current directory.
-        - "paths", ("baseUrl" must be specified for this flag, "paths" are resolved relative to "baseUrl") location for specific modules:
+- - "baseUrl", informs the compiler where to find modules. Given path is relative, it is computed based on current directory.
+- - "paths", ("baseUrl" must be specified for this flag, "paths" are resolved relative to "baseUrl") location for specific modules:
 ```
 {
   "compilerOptions": {
@@ -799,7 +799,7 @@ import { Component } from "@angular/core";
   }
 }
 ```
-        - "rootDirs", specify a list of roots whose contents are expected to merge at run-time:
+- - "rootDirs", specify a list of roots whose contents are expected to merge at run-time:
 ```
 "rootDirs": ["src/views", "generated/templates/views"]
 ```
@@ -812,13 +812,13 @@ import { Component } from "@angular/core";
 * Is a TypeScript concept
 * Means that the compiler merges separate declarations declared with the same name into a single definition
 * All create Namespace, Type and Value:
-        - Namespace: N, V
-        - Class: T, V
-        - Enum: T, V
-        - Interface: T
-        - Type Alias: T
-        - Function: V
-        - Variable: V
+- - Namespace: N, V
+- - Class: T, V
+- - Enum: T, V
+- - Interface: T
+- - Type Alias: T
+- - Function: V
+- - Variable: V
 * Merging Interfaces (the second interface will have a higher precedence than the first):
 ```
 interface Box {
@@ -843,9 +843,9 @@ let box: Box = { height: 5, width: 6, scale: 10 };
         1) Name your files with a .tsx extension
         2) Enable the jsx option
 * TypeScript ships with three JSX modes: preserve, react, and react-native
-        - preserve mode will keep the JSX as part of the output to be further consumed by another transform step (e.g. Babel)
-        - react mode will emit React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file
-        - react-native mode is the equivalent of preserve in that it keeps all JSX, but the output will instead have a .js file
+- - preserve mode will keep the JSX as part of the output to be further consumed by another transform step (e.g. Babel)
+- - react mode will emit React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file
+- - react-native mode is the equivalent of preserve in that it keeps all JSX, but the output will instead have a .js file
 * You can specify this mode using either the `--jsx` command line flag or the corresponding option jsx in your tsconfig.json
 * In .tsx you can't use angle bracket type assertions (`var foo = <foo>bar;`). Instead use `var foo = bar as foo;`
 * An intrinsic element (e.g. a div or span in a DOM environment) always begins with a lowercase letter, and a value-based element always begins with an uppercase letter.
