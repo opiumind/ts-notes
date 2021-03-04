@@ -390,7 +390,7 @@ declare enum Enum {
 
 * Type compatibility in TypeScript is based on structural subtyping (!!!TypeScript is a structural type system!!!)
 * In TypeScript, there are two kinds of compatibility: subtype and assignment. (Different places in the language use one of the two compatibility mechanisms)
-* nominally-typed languages: C# or Java will give errors in typescript code like:
+* Nominally-typed languages: C# or Java will give errors in typescript code like:
 ```
 interface Named {
   name: string;
@@ -419,7 +419,7 @@ let y = { name: "Alice", location: "Seattle" };
 x = y; // (less properties)=(more properties)!!!
 ```
 
-    * Comparing functions:
+* Comparing functions:
 ```
 // Functions
 let x = (a: number) => 0;
@@ -428,7 +428,7 @@ let y = (b: number, s: string) => 0;
 y = x; // OK (more parameters)=(less parameters)!!!
 x = y; // Error
 ```
-    * But return types are treated different:
+* But return types are treated different:
 ```
 let x = () => ({name: "Alice"});
 let y = () => ({name: "Alice", location: "Seattle"});
@@ -436,8 +436,8 @@ let y = () => ({name: "Alice", location: "Seattle"});
 x = y; // OK (less properties)=(more properties)!!!
 y = x; // Error, because x() lacks a location property
 ```
-    * Enums are compatible with numbers, and numbers are compatible with enums.
-    * Enum values from different enum types are considered incompatible:
+* Enums are compatible with numbers, and numbers are compatible with enums.
+* Enum values from different enum types are considered incompatible:
 ```
 enum Status {
   Ready,
@@ -452,8 +452,8 @@ enum Color {
 let status = Status.Ready;
 status = Color.Green; // Error
 ```
-    * Private and protected members in a class affect their compatibility. For example, if the target type contains a private member, then the source type must also contain a private member that originated from the same class.
-    * Generics:
+* Private and protected members in a class affect their compatibility. For example, if the target type contains a private member, then the source type must also contain a private member that originated from the same class.
+* Generics:
 ```
 interface Empty<T> {}
 let x: Empty<number>;
@@ -483,7 +483,7 @@ let reverse = function <U>(y: U): U {
 
 identity = reverse; // OK, because (x: any) => any matches (y: any) => any
 ```
-    * Table of type compatibility https://www.typescriptlang.org/docs/handbook/type-compatibility.html
+* Table of type compatibility https://www.typescriptlang.org/docs/handbook/type-compatibility.html
         - Everything is assignable to itself.
         - any and unknown are the same in terms of what is assignable to them, different in that unknown is not assignable to anything except any.
         - unknown and never are like inverses of each other. Everything is assignable to unknown, never is assignable to everything. Nothing is assignable to never, unknown is not assignable to anything (except any).
@@ -492,7 +492,7 @@ identity = reverse; // OK, because (x: any) => any matches (y: any) => any
 
 ## Advanced Types
 
-    * <Type guard> is some expression that performs a runtime check that guarantees the type in some scope.
+* <Type guard> is some expression that performs a runtime check that guarantees the type in some scope.
 To define a type guard, we simply need to define a function whose return type is a type predicate:
 ```
 function isFish(pet: Fish | Bird): pet is Fish {
@@ -512,7 +512,7 @@ if (isFish(pet)) {
   pet.fly();
 }
 ```
-    * You may use the type guard isFish to filter an array of Fish | Bird and obtain an array of Fish:
+* You may use the type guard isFish to filter an array of Fish | Bird and obtain an array of Fish:
 ```
 const zoo: (Fish | Bird)[] = [getSmallPet(), getSmallPet(), getSmallPet()];
 const underWater1: Fish[] = zoo.filter(isFish);
@@ -520,7 +520,7 @@ const underWater1: Fish[] = zoo.filter(isFish);
 const underWater2: Fish[] = zoo.filter<Fish>(isFish);
 const underWater3: Fish[] = zoo.filter<Fish>(pet => isFish(pet));
 ```
-    * The in operator also acts as a narrowing expression for types:
+* The in operator also acts as a narrowing expression for types:
 ```
 function move(pet: Fish | Bird) {
   if ("swim" in pet) {
@@ -529,12 +529,12 @@ function move(pet: Fish | Bird) {
   return pet.fly();
 }
 ```
-    * By default, the type checker considers null and undefined assignable to anything. But the `--strictNullChecks` flag fixes this: when you declare a variable, it doesn’t automatically include null or undefined. With `--strictNullChecks`, an optional parameter automatically adds | undefined (For example, 'number | undefined'). The same is true for optional properties.
-    * The syntax is postfix !: identifier! removes null and undefined from the type of identifier:
+* By default, the type checker considers null and undefined assignable to anything. But the `--strictNullChecks` flag fixes this: when you declare a variable, it doesn’t automatically include null or undefined. With `--strictNullChecks`, an optional parameter automatically adds | undefined (For example, 'number | undefined'). The same is true for optional properties.
+* The syntax is postfix !: identifier! removes null and undefined from the type of identifier:
 ```
 user!.email!.length;
 ```
-    * <Type aliases> create a new name for a type (can also be generic):
+* <Type aliases> create a new name for a type (can also be generic):
 ```
 type Second = number;
 
@@ -543,10 +543,10 @@ let time: Second = 10;
 
 type Container<T> = { value: T };
 ```
-    * We can also have a type alias refer to itself in a property.
-    * A type cannot be re-opened to add new properties vs an interface which is always extendable.
-    * If you can’t express some shape with an interface and you need to use a union or tuple type, type aliases are usually the way to go, otherwise interfaces are better.
-    * If the class uses this types, you can extend it and the new class can use the old methods with no changes:
+* We can also have a type alias refer to itself in a property.
+* A type cannot be re-opened to add new properties vs an interface which is always extendable.
+* If you can’t express some shape with an interface and you need to use a union or tuple type, type aliases are usually the way to go, otherwise interfaces are better.
+* If the class uses this types, you can extend it and the new class can use the old methods with no changes:
 ```
 class BasicCalculator {
   public constructor(protected value: number = 0) {}
@@ -566,21 +566,21 @@ class ScientificCalculator extends BasicCalculator {
   }
 }
 ```
-    * Union type: (string | number)
+* Union type: (string | number)
 
 
 ## Modules
 
-    * Modules are executed within their own scope, not in the global scope
-    * The relationships between modules are specified in terms of imports and exports at the file level
-    * Any declaration (such as a variable, function, class, type alias, or interface) can be exported by adding the `export` keyword:
+* Modules are executed within their own scope, not in the global scope
+* The relationships between modules are specified in terms of imports and exports at the file level
+* Any declaration (such as a variable, function, class, type alias, or interface) can be exported by adding the `export` keyword:
 ```
 export interface StringValidator {
   isAcceptable(s: string): boolean;
 }
 ```
-    * Exports can be renamed: `export { ZipCodeValidator as mainValidator };`
-    * Re-exports. It does not import it locally, or introduce a local variable:
+* Exports can be renamed: `export { ZipCodeValidator as mainValidator };`
+* Re-exports. It does not import it locally, or introduce a local variable:
 ```
 export class ParseIntBasedZipCodeValidator {
   isAcceptable(s: string) {
@@ -591,7 +591,7 @@ export class ParseIntBasedZipCodeValidator {
 // Export original validator but rename it
 export { ZipCodeValidator as RegExpBasedZipCodeValidator } from "./ZipCodeValidator";
 ```
-    * Optionally, a module can wrap one or more modules and combine all their exports using export * from "module" syntax:
+* Optionally, a module can wrap one or more modules and combine all their exports using export * from "module" syntax:
 ```
 export * from "./StringValidator"; // exports 'StringValidator' interface
 export * from "./ZipCodeValidator"; // exports 'ZipCodeValidator' class and 'numberRegexp' constant value
@@ -600,7 +600,7 @@ export * from "./ParseIntBasedZipCodeValidator"; //  exports the 'ParseIntBasedZ
 // of the 'ZipCodeValidator' class from 'ZipCodeValidator.ts'
 // module.
 ```
-    * Imports:
+* Imports:
 ```
 import { ZipCodeValidator } from "./ZipCodeValidator";
 
@@ -609,19 +609,19 @@ let myValidator = new ZipCodeValidator();
 // Can be also renamed:
 import { ZipCodeValidator as ZCV } from "./ZipCodeValidator";
 ```
-    * Import the entire module into a single variable, and use it to access the module exports:
+* Import the entire module into a single variable, and use it to access the module exports:
 ```
 import * as validator from "./ZipCodeValidator";
 let myValidator = new validator.ZipCodeValidator();
 ```
-    * Importing Types:
+* Importing Types:
 ```
 import { APIResponseType } from "./api";
 
 // Explicitly use import type
 import type { APIResponseType } from "./api";
 ```
-    * Default exports:
+* Default exports:
 ```
 //ZipCodeValidator.ts
 
@@ -635,7 +635,7 @@ import validator from "./ZipCodeValidator";
 
 let myValidator = new validator();
 ```
-    * Default exports can also be just values or functions:
+* Default exports can also be just values or functions:
 ```
 export default "123";
 
@@ -643,13 +643,13 @@ export default function (s: string) {
   return s.length === 5 && numberRegexp.test(s);
 }
 ```
-    * Export all as x, a shorthand for re-exporting another module with a name:
+* Export all as x, a shorthand for re-exporting another module with a name:
 ```
 export * as utilities from "./utilities";
 
 import { utilities } from "./index";
 ```
-    * The `export =` syntax specifies a single object that is exported from the module:
+* The `export =` syntax specifies a single object that is exported from the module:
 ```
 class ZipCodeValidator {
   ...
@@ -659,9 +659,9 @@ export = ZipCodeValidator;
 
 import zip = require("./ZipCodeValidator");
 ```
-    * In Type Script we only can load a module under some conditions (different syntax in different libraries: Node.js, require.js, System.js, etc.)
-    * To describe the shape of libraries not written in TypeScript, we need to declare the API that the library exposes: in .d.ts files. See https://www.typescriptlang.org/docs/handbook/modules.html
-    * Export as close to top-level as possible:
+* In Type Script we only can load a module under some conditions (different syntax in different libraries: Node.js, require.js, System.js, etc.)
+* To describe the shape of libraries not written in TypeScript, we need to declare the API that the library exposes: in .d.ts files. See https://www.typescriptlang.org/docs/handbook/modules.html
+* Export as close to top-level as possible:
         - If you’re only exporting a single class or function, use export default:
 ```
 //MyClass.ts
@@ -707,7 +707,7 @@ let x = new myLargeModule.Dog();
 
 ## Namespaces
 
-    * Name classes like `Validation.LettersOnlyValidator`, where "Validation" is a name of the namespace (internal module):
+* Name classes like `Validation.LettersOnlyValidator`, where "Validation" is a name of the namespace (internal module):
 ```
 namespace Validation {
   export interface StringValidator {
@@ -724,7 +724,7 @@ namespace Validation {
   }
 }
 ```
-    * You can store namespace and classes declarations in different files:
+* You can store namespace and classes declarations in different files:
 ```
 //Validation.ts
 namespace Validation {
@@ -749,44 +749,44 @@ namespace Validation {
 let validators: { [s: string]: Validation.StringValidator } = {};
 validators["Letters only"] = new Validation.LettersOnlyValidator();
 ```
-    * We can use concatenated output using the `--outFile` flag to compile all of the input files into a single JavaScript output file:
+* We can use concatenated output using the `--outFile` flag to compile all of the input files into a single JavaScript output file:
 ```
 tsc --outFile sample.js Test.ts
 or
 tsc --outFile sample.js Validation.ts LettersOnlyValidator.ts ZipCodeValidator.ts Test.ts
 //or in `<script>`
 ```
-    * Using aliases:
+* Using aliases:
 ```
 import polygons = Shapes.Polygons;
 let sq = new polygons.Square(); // Same as 'new Shapes.Polygons.Square()'
 ```
-    * Ambient namespaces: see https://www.typescriptlang.org/docs/handbook/namespaces.html#table-of-contents
+* Ambient namespaces: see https://www.typescriptlang.org/docs/handbook/namespaces.html#table-of-contents
 
 
 ## Namespaces and Modules
 
-    * Modules can contain both code and declarations, provide for better code reuse, stronger isolation and better tooling support for bundling. Recommended!!!
-    * Namespaces are simply named JavaScript objects in the global namespace, can span multiple files, and can be concatenated using `--outFile`
+* Modules can contain both code and declarations, provide for better code reuse, stronger isolation and better tooling support for bundling. Recommended!!!
+* Namespaces are simply named JavaScript objects in the global namespace, can span multiple files, and can be concatenated using `--outFile`
 
 
 ## Module Resolution
 
-    * Module resolution is the process the compiler uses to figure out what an import refers to
-    * A relative import is one that starts with /, ./ or ../
-    * Any other import is considered non-relative:
+* Module resolution is the process the compiler uses to figure out what an import refers to
+* A relative import is one that starts with /, ./ or ../
+* Any other import is considered non-relative:
 ```
 import * as $ from "jquery";
 import { Component } from "@angular/core";
 ```
-    * You should use relative imports for your own modules that are guaranteed to maintain their relative location at runtime
-    * A non-relative import can be resolved relative to baseUrl, or through path mapping
-    * There are two possible module resolution strategies: Node and Classic. 
-    * You can use the `--moduleResolution` flag to specify the module resolution strategy. If not specified, the default is Node for `--module commonjs`, and Classic otherwise (including when `--module` is set to amd, system, umd, es2015, esnext, etc.).
-    * Classic (`import { b } from "./moduleB"`) used to be TypeScript’s default resolution strategy. For non-relative it will search all the way up from the current folder of the file with the import. For relative by standard usual way. 
-    * Node resolution (`var x = require("./moduleB");`) for relative resolution: file name -> package.json in the folder -> index.js in the folder 
-    * Node resolution for non-relative resolution: all steps above in each directory all the way up
-    * Additional module resolution flags:
+* You should use relative imports for your own modules that are guaranteed to maintain their relative location at runtime
+* A non-relative import can be resolved relative to baseUrl, or through path mapping
+* There are two possible module resolution strategies: Node and Classic. 
+* You can use the `--moduleResolution` flag to specify the module resolution strategy. If not specified, the default is Node for `--module commonjs`, and Classic otherwise (including when `--module` is set to amd, system, umd, es2015, esnext, etc.).
+* Classic (`import { b } from "./moduleB"`) used to be TypeScript’s default resolution strategy. For non-relative it will search all the way up from the current folder of the file with the import. For relative by standard usual way. 
+* Node resolution (`var x = require("./moduleB");`) for relative resolution: file name -> package.json in the folder -> index.js in the folder 
+* Node resolution for non-relative resolution: all steps above in each directory all the way up
+* Additional module resolution flags:
         - "baseUrl", informs the compiler where to find modules. Given path is relative, it is computed based on current directory.
         - "paths", ("baseUrl" must be specified for this flag, "paths" are resolved relative to "baseUrl") location for specific modules:
 ```
@@ -803,15 +803,15 @@ import { Component } from "@angular/core";
 ```
 "rootDirs": ["src/views", "generated/templates/views"]
 ```
-    * Run `tsc --traceResolution` invoking the compiler to see the log
-    * `tsc app.ts moduleA.ts --noResolve` instructs the compiler not to “add” any files to the compilation that were not passed on the command line
+* Run `tsc --traceResolution` invoking the compiler to see the log
+* `tsc app.ts moduleA.ts --noResolve` instructs the compiler not to “add” any files to the compilation that were not passed on the command line
 
 
 ## Declaration Merging
 
-    * Is a TypeScript concept
-    * Means that the compiler merges separate declarations declared with the same name into a single definition
-    * All create Namespace, Type and Value:
+* Is a TypeScript concept
+* Means that the compiler merges separate declarations declared with the same name into a single definition
+* All create Namespace, Type and Value:
         - Namespace: N, V
         - Class: T, V
         - Enum: T, V
@@ -819,7 +819,7 @@ import { Component } from "@angular/core";
         - Type Alias: T
         - Function: V
         - Variable: V
-    * Merging Interfaces (the second interface will have a higher precedence than the first):
+* Merging Interfaces (the second interface will have a higher precedence than the first):
 ```
 interface Box {
   height: number;
@@ -832,24 +832,24 @@ interface Box {
 
 let box: Box = { height: 5, width: 6, scale: 10 };
 ```
-    * Merging Namespaces. All exported members will be merged
-    * Merging Namespaces with Classes: see https://www.typescriptlang.org/docs/handbook/declaration-merging.html. Similarly, namespaces can be used to extend enums with static members
+* Merging Namespaces. All exported members will be merged
+* Merging Namespaces with Classes: see https://www.typescriptlang.org/docs/handbook/declaration-merging.html. Similarly, namespaces can be used to extend enums with static members
     
 
 ## JSX
 
-    * Is an embeddable XML-like syntax. It is meant to be transformed into valid JavaScript
-    * In order to use JSX you must do two things.
+* Is an embeddable XML-like syntax. It is meant to be transformed into valid JavaScript
+* In order to use JSX you must do two things.
         1) Name your files with a .tsx extension
         2) Enable the jsx option
-    * TypeScript ships with three JSX modes: preserve, react, and react-native
+* TypeScript ships with three JSX modes: preserve, react, and react-native
         - preserve mode will keep the JSX as part of the output to be further consumed by another transform step (e.g. Babel)
         - react mode will emit React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file
         - react-native mode is the equivalent of preserve in that it keeps all JSX, but the output will instead have a .js file
-    * You can specify this mode using either the `--jsx` command line flag or the corresponding option jsx in your tsconfig.json
-    * In .tsx you can't use angle bracket type assertions (`var foo = <foo>bar;`). Instead use `var foo = bar as foo;`
-    * An intrinsic element (e.g. a div or span in a DOM environment) always begins with a lowercase letter, and a value-based element always begins with an uppercase letter.
-    * JSX.IntrinsicElements interface:
+* You can specify this mode using either the `--jsx` command line flag or the corresponding option jsx in your tsconfig.json
+* In .tsx you can't use angle bracket type assertions (`var foo = <foo>bar;`). Instead use `var foo = bar as foo;`
+* An intrinsic element (e.g. a div or span in a DOM environment) always begins with a lowercase letter, and a value-based element always begins with an uppercase letter.
+* JSX.IntrinsicElements interface:
 ```
 declare namespace JSX {
   interface IntrinsicElements {
@@ -860,36 +860,36 @@ declare namespace JSX {
 <foo />; // ok
 <bar />; // error, since it has not been specified on JSX.IntrinsicElements
 ```
-    * The component is defined as a JavaScript function where its first argument is a props object, and return type must be assignable to JSX.Element:
+* The component is defined as a JavaScript function where its first argument is a props object, and return type must be assignable to JSX.Element:
 ```
 function ComponentFoo(prop: FooProp) {
   return <AnotherComponent name={prop.name} />;
 }
 ```
-    * JSX allows you to embed expressions between tags by surrounding the expressions with curly braces ({ }).
+* JSX allows you to embed expressions between tags by surrounding the expressions with curly braces ({ }).
 
 
 ## Decorators
 
-    * An experimental feature of TypeScript, may change
-    * To enable experimental support for decorators, you must enable the experimentalDecorators compiler option either on the command line or in your tsconfig.json
+* An experimental feature of TypeScript, may change
+* To enable experimental support for decorators, you must enable the experimentalDecorators compiler option either on the command line or in your tsconfig.json
 
 
 ## Mixins
 
-    * Another popular way of building up classes from reusable components is to build them by combining simpler partial classes
-    * The pattern relies on using Generics with class inheritance to extend a base class.
+* Another popular way of building up classes from reusable components is to build them by combining simpler partial classes
+* The pattern relies on using Generics with class inheritance to extend a base class.
 
 
 ## Triple-Slash Directives
     
-    * Are single-line comments containing a single XML tag. The contents of the comment are used as compiler directives.
-    * Are only valid at the top of their containing file
-    * `/// <reference path="..." />` - serves as a declaration of dependency between files.
-    * `/// <reference types="..." />` - directive declares a dependency on a package. An easy way to think of triple-slash-reference-types directives are as an import for declaration packages.
-    * `/// <reference lib="..." />` - allows a file to explicitly include an existing built-in lib file
-    * `/// <reference no-default-lib="true"/>` - marks a file as a default library (this comment at the top of lib.d.ts). Note that when passing --skipDefaultLibCheck, the compiler will only skip checking files with /// <reference no-default-lib="true"/>.
-    * `/// <amd-module />` - allows passing an optional module name to the compiler (by default AMD modules are generated anonymous):
+* Are single-line comments containing a single XML tag. The contents of the comment are used as compiler directives.
+* Are only valid at the top of their containing file
+* `/// <reference path="..." />` - serves as a declaration of dependency between files.
+* `/// <reference types="..." />` - directive declares a dependency on a package. An easy way to think of triple-slash-reference-types directives are as an import for declaration packages.
+* `/// <reference lib="..." />` - allows a file to explicitly include an existing built-in lib file
+* `/// <reference no-default-lib="true"/>` - marks a file as a default library (this comment at the top of lib.d.ts). Note that when passing --skipDefaultLibCheck, the compiler will only skip checking files with /// <reference no-default-lib="true"/>.
+* `/// <amd-module />` - allows passing an optional module name to the compiler (by default AMD modules are generated anonymous):
 ```
 ///<amd-module name="NamedModule"/>
 export class C {}
@@ -898,12 +898,12 @@ export class C {}
 
 ## Type Checking JavaScript Files (some notable differences on how checking works in .js files compared to .ts files)
 
-    * No new members can be added that were not specified in the original literal in .ts
+* No new members can be added that were not specified in the original literal in .ts
 
 
 ## Utility Types
 
-    * Partial<Type> - Constructs a type with all properties of Type set to optional:
+* Partial<Type> - Constructs a type with all properties of Type set to optional:
 ```
 interface Todo {
   title: string;
@@ -923,7 +923,7 @@ const todo2 = updateTodo(todo1, {
   description: "throw out trash",
 });
 ```
-    * Readonly<Type> - Constructs a type with all properties of Type set to readonly:
+* Readonly<Type> - Constructs a type with all properties of Type set to readonly:
 ```
 interface Todo {
   title: string;
@@ -936,7 +936,7 @@ const todo: Readonly<Todo> = {
 todo.title = "Hello";
 // Cannot assign to 'title' because it is a read-only property.
 ```
-    * Record<Keys,Type> - Constructs an object type whose property keys are Keys and whose property values are Type:
+* Record<Keys,Type> - Constructs an object type whose property keys are Keys and whose property values are Type:
 ```
 interface PageInfo {
   title: string;
@@ -953,7 +953,7 @@ const nav: Record<Page, PageInfo> = {
 nav.about;
 // ^ = const nav: Record
 ```
-    * Pick<Type, Keys> - Constructs a type by picking the set of properties Keys from Type:
+* Pick<Type, Keys> - Constructs a type by picking the set of properties Keys from Type:
 ```
 interface Todo {
   title: string;
@@ -971,7 +971,7 @@ const todo: TodoPreview = {
 todo;
 // ^ = const todo: TodoPreview
 ```
-    * Omit<Type, Keys> - Constructs a type by picking all properties from Type and then removing Keys:
+* Omit<Type, Keys> - Constructs a type by picking all properties from Type and then removing Keys:
 ```
 interface Todo {
   title: string;
@@ -989,7 +989,7 @@ const todo: TodoPreview = {
 todo;
 // ^ = const todo: TodoPreview
 ```
-    * Exclude<Type, ExcludedUnion> - Constructs a type by excluding from Type all union members that are assignable to ExcludedUnion:
+* Exclude<Type, ExcludedUnion> - Constructs a type by excluding from Type all union members that are assignable to ExcludedUnion:
 ```
 type T0 = Exclude<"a" | "b" | "c", "a">;
 //    ^ = type T0 = "b" | "c"
@@ -998,21 +998,21 @@ type T1 = Exclude<"a" | "b" | "c", "a" | "b">;
 type T2 = Exclude<string | number | (() => void), Function>;
 //    ^ = type T2 = string | number
 ```
-    * Extract<Type, Union> - Constructs a type by extracting from Type all union members that are assignable to Union:
+* Extract<Type, Union> - Constructs a type by extracting from Type all union members that are assignable to Union:
 ```
 type T0 = Extract<"a" | "b" | "c", "a" | "f">;
 //    ^ = type T0 = "a"
 type T1 = Extract<string | number | (() => void), Function>;
 //    ^ = type T1 = () => void
 ```
-    * NonNullable<Type> - Constructs a type by excluding null and undefined from Type:
+* NonNullable<Type> - Constructs a type by excluding null and undefined from Type:
 ```
 type T0 = NonNullable<string | number | undefined>;
 //    ^ = type T0 = string | number
 type T1 = NonNullable<string[] | null | undefined>;
 //    ^ = type T1 = string[]
 ```
-    * Parameters<Type> - Constructs a tuple type from the types used in the parameters of a function type Type
+* Parameters<Type> - Constructs a tuple type from the types used in the parameters of a function type Type
 ```
 declare function f1(arg: { a: number; b: string }): void;
 
@@ -1039,7 +1039,7 @@ Type 'Function' does not satisfy the constraint '(...args: any) => any'.
   Type 'Function' provides no match for the signature '(...args: any): any'.
 //    ^ = type T7 = never
 ```
-    * ConstructorParameters<Type> - produces a tuple type with all the parameter types (or the type never if Type is not a function):
+* ConstructorParameters<Type> - produces a tuple type with all the parameter types (or the type never if Type is not a function):
 ```
 type T0 = ConstructorParameters<ErrorConstructor>;
 //    ^ = type T0 = [message?: string]
@@ -1055,7 +1055,7 @@ Type 'Function' does not satisfy the constraint 'new (...args: any) => any'.
   Type 'Function' provides no match for the signature 'new (...args: any): any'.
 //    ^ = type T4 = never
 ```
-    * ReturnType<Type> - Constructs a type consisting of the return type of function Type:
+* ReturnType<Type> - Constructs a type consisting of the return type of function Type:
 ```
 declare function f1(): { a: number; b: string };
 
@@ -1084,7 +1084,7 @@ Type 'Function' does not satisfy the constraint '(...args: any) => any'.
   Type 'Function' provides no match for the signature '(...args: any): any'.
 //    ^ = type T8 = any
 ```
-    * InstanceType<Type> - Constructs a type consisting of the instance type of a constructor function in Type:
+* InstanceType<Type> - Constructs a type consisting of the instance type of a constructor function in Type:
 ```
 class C {
   x = 0;
@@ -1105,7 +1105,7 @@ Type 'Function' does not satisfy the constraint 'new (...args: any) => any'.
   Type 'Function' provides no match for the signature 'new (...args: any): any'.
 //    ^ = type T4 = any
 ```
-    * Required<Type> - Constructs a type consisting of all properties of Type set to required. The opposite of Partial:
+* Required<Type> - Constructs a type consisting of all properties of Type set to required. The opposite of Partial:
 ```
 interface Props {
   a?: number;
@@ -1117,7 +1117,7 @@ const obj: Props = { a: 5 };
 const obj2: Required<Props> = { a: 5 };
 Property 'b' is missing in type '{ a: number; }' but required in type 'Required<Props>'.
 ```
-    * ThisParameterType<Type> - Extracts the type of the this parameter for a function type, or unknown if the function type has no this parameter:
+* ThisParameterType<Type> - Extracts the type of the this parameter for a function type, or unknown if the function type has no this parameter:
 ```
 function toHex(this: Number) {
   return this.toString(16);
@@ -1127,7 +1127,7 @@ function numberToString(n: ThisParameterType<typeof toHex>) {
   return toHex.apply(n);
 }
 ```
-    * OmitThisParameter<Type> - Removes the this parameter from Type. If Type has no explicitly declared this parameter, the result is simply Type:
+* OmitThisParameter<Type> - Removes the this parameter from Type. If Type has no explicitly declared this parameter, the result is simply Type:
 ```
 function toHex(this: Number) {
   return this.toString(16);
@@ -1137,4 +1137,4 @@ const fiveToHex: OmitThisParameter<typeof toHex> = toHex.bind(5);
 
 console.log(fiveToHex());
 ```
-    * ThisType<Type> - This utility does not return a transformed type. Instead, it serves as a marker for a contextual this type. Note that the --noImplicitThis flag must be enabled to use this utility
+* ThisType<Type> - This utility does not return a transformed type. Instead, it serves as a marker for a contextual this type. Note that the --noImplicitThis flag must be enabled to use this utility
