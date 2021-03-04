@@ -38,9 +38,9 @@
 
 ## Interfaces
 
-	* Readonly properties
-	* ReadonlyArray<T>
-	*! Variables use const whereas properties use readonly
+* Readonly properties
+* ReadonlyArray<T>
+* ! Variables use const whereas properties use readonly
 
 ```
 interface SquareConfig {
@@ -49,8 +49,8 @@ interface SquareConfig {
     [propName: string]: any; // could also have any number of other properties
 }
 ```
-	* Interfaces are also capable of describing function types
-	* Indexable Types (for index only string and number supported):
+* Interfaces are also capable of describing function types
+* Indexable Types (for index only string and number supported):
 ```
 interface StringArray {
     [index: number]: string;
@@ -68,13 +68,13 @@ interface NumberOrStringDictionary {
     name: string;      // ok, name is a string
 }
 ```
-	* You can make index signatures readonly:
+* You can make index signatures readonly:
 ```
 interface ReadonlyStringArray {
     readonly [index: number]: string;
 }
 ```
-	* Interfaces of Class Types:
+* Interfaces of Class Types:
 ```
 interface ClockInterface {
     currentTime: Date;
@@ -89,7 +89,7 @@ class Clock implements ClockInterface {
     constructor(h: number, m: number) { }
 }
 ```
-	* Interfaces can extend each other:
+* Interfaces can extend each other:
 ```
 interface Square extends Shape {
     sideLength: number;
@@ -115,8 +115,8 @@ class Dog extends Animal {
 
 ## Classes
 
-	* A constructor may also be marked protected. This means that the class cannot be instantiated outside of its containing class, but can be extended.
-	* Readonly parameters
+* A constructor may also be marked protected. This means that the class cannot be instantiated outside of its containing class, but can be extended.
+* Readonly parameters
 ```
 class Octopus {
     readonly numberOfLegs: number = 8;
@@ -124,7 +124,7 @@ class Octopus {
     }
 }
 ```
-	* Getter, setter:
+* Getter, setter:
 ```
 class Employee {
     private _fullName: string;
@@ -145,7 +145,7 @@ class Employee {
 let employee = new Employee();
 employee.fullName = "Bob Smith";
 ```
-	* Abstract classes:
+* Abstract classes:
 ```
 abstract class Department {
 
@@ -181,12 +181,12 @@ department.printName();
 department.printMeeting();
 department.generateReports(); // error: method doesn't exist on declared abstract type
 ```
-	* This variable will hold the class itself, or said another way its constructor function. Here we use typeof Greeter, that is “give me the type of the Greeter class itself” rather than the instance type. Or, more precisely, “give me the type of the symbol called Greeter,” which is the type of the constructor function. This type will contain all of the static members of Greeter along with the constructor that creates instances of the Greeter class:
+* This variable will hold the class itself, or said another way its constructor function. Here we use typeof Greeter, that is “give me the type of the Greeter class itself” rather than the instance type. Or, more precisely, “give me the type of the symbol called Greeter,” which is the type of the constructor function. This type will contain all of the static members of Greeter along with the constructor that creates instances of the Greeter class:
 ```
 let greeterMaker: typeof Greeter = Greeter;
 greeterMaker.standardGreeting = "Hey there!";
 ```
-	* Using a class as an interface:
+* Using a class as an interface:
 ```
 class Point {
     x: number;
@@ -203,15 +203,15 @@ let point3d: Point3d = {x: 1, y: 2, z: 3};
 
 ## Functions	
 
-	* Any optional parameters must follow required parameters
-	* Default-initialized parameters don’t need to occur after required parameters, but then users need to explicitly pass undefined to get the default initialized value:
+* Any optional parameters must follow required parameters
+* Default-initialized parameters don’t need to occur after required parameters, but then users need to explicitly pass undefined to get the default initialized value:
 ```
 function buildName(firstName = "Will", lastName: string) {
     return firstName + " " + lastName;
 }
 let result4 = buildName(undefined, "Adams");
 ```
-	* Rest parameters:
+* Rest parameters:
 ```
 function buildName(firstName: string, ...restOfName: string[]) {
     return firstName + " " + restOfName.join(" ");
@@ -226,7 +226,7 @@ let buildNameFun: (fname: string, ...rest: string[]) => string = buildName;
 
 ## Generics
 
-	* Generic Functions:
+* Generic Functions:
 ```
 function identity<T>(arg: T): T {
     return arg;
@@ -236,14 +236,14 @@ let output = identity<string>("myString");
 OR
 let output = identity("myString");  // type of output will be 'string'
 ```
-	* If you need get the length of arg use arrays of T rather than T:
+* If you need get the length of arg use arrays of T rather than T:
 ```
 function loggingIdentity<T>(arg: T[]): T[] {
     console.log(arg.length);  // Array has a .length, so no more error
     return arg;
 }
 ```
-	* Other ways to write:
+* Other ways to write:
 ```
 function identity<T>(arg: T): T {
     return arg;
@@ -252,7 +252,7 @@ function identity<T>(arg: T): T {
 let myIdentity: <U>(arg: U) => U = identity;
 let myIdentity: {<T>(arg: T): T} = identity;
 ```
-	* Generic Interfaces:
+* Generic Interfaces:
 ```
 interface GenericIdentityFn<T> {
     (arg: T): T;
@@ -264,8 +264,8 @@ function identity<T>(arg: T): T {
 
 let myIdentity: GenericIdentityFn<number> = identity;
 ```
-	* It is not possible to create generic enums and namespaces
-	* Generic Classes:
+* It is not possible to create generic enums and namespaces
+* Generic Classes:
 ```
 class GenericNumber<T> {
     zeroValue: T;
@@ -276,7 +276,7 @@ let myGenericNumber = new GenericNumber<number>();
 myGenericNumber.zeroValue = 0;
 myGenericNumber.add = function(x, y) { return x + y; };
 ```
-	* Generic Constraints:
+* Generic Constraints:
 ```
 interface Lengthwise {
     length: number;
@@ -289,7 +289,7 @@ function loggingIdentity<T extends Lengthwise>(arg: T): T {
 
 loggingIdentity({length: 10, value: 3});
 ```
-	* Type Parameters in Generic Constraints:
+* Type Parameters in Generic Constraints:
 ```
 function getProperty<T, K extends keyof T>(obj: T, key: K) {
     return obj[key];
@@ -304,7 +304,7 @@ getProperty(x, "m"); // error: Argument of type 'm' isn't assignable to 'a' | 'b
 
 ## Enums
 	
-	* Numeric Enums:
+* Numeric Enums:
 ```
 enum Direction {
     Up = 1,
@@ -322,22 +322,22 @@ enum Direction {
 }
 // Here, Up would have the value 0, Down would have 1, etc
 ```
-	* Numeric enums can be mixed in computed and constant members:
+* Numeric enums can be mixed in computed and constant members:
 ```
 enum E {
     A = getSomeValue(),
     B, // Error! Enum member must have initializer.
 }
 ```
-	* In a string enum, each member has to be constant-initialized with a string literal, or with another string enum member.
-	* Heterogeneous enums. Technically enums can be mixed with string and numeric members, but it’s not clear why you would ever want to do so, don't do so.
-	* An enum member is considered constant if:
+* In a string enum, each member has to be constant-initialized with a string literal, or with another string enum member.
+* Heterogeneous enums. Technically enums can be mixed with string and numeric members, but it’s not clear why you would ever want to do so, don't do so.
+* An enum member is considered constant if:
 		- It is the first member in the enum and it has no initializer, in which case it’s assigned the value 0
 		- It does not have an initializer and the preceding enum member was a numeric constant. In this case the value of the current enum member will be the value of the preceding enum member plus one
 		- The enum member is initialized with a constant enum expression
 		- It is a compile time error for constant enum expressions to be evaluated to NaN or Infinity
-	* In all other cases enum member is considered computed
-	* keyof with enums:
+* In all other cases enum member is considered computed
+* keyof with enums:
 ```
 enum LogLevel {
     ERROR, WARN, INFO, DEBUG
@@ -359,7 +359,7 @@ function printImportant(key: LogLevelStrings, message: string) {
 }
 printImportant('ERROR', 'This is a message');
 ``` 
-	* Reverse mappings. Numeric enums members also get a reverse mapping from enum values to enum names (!string enum members do not get a reverse mapping):
+* Reverse mappings. Numeric enums members also get a reverse mapping from enum values to enum names (!string enum members do not get a reverse mapping):
 ```
 enum Enum {
     A
@@ -367,7 +367,7 @@ enum Enum {
 let a = Enum.A;
 let nameOfA = Enum[a]; // "A"
 ```
-	* Const enums:
+* Const enums:
 ```
 const enum Enum {
     A = 1,
@@ -376,7 +376,7 @@ const enum Enum {
 ```
 //Const enums can only use constant enum expressions.
 
-	* Ambient enums. Ambient enums are used to describe the shape of already existing enum types:
+* Ambient enums. Ambient enums are used to describe the shape of already existing enum types:
 ```
 declare enum Enum {
     A = 1,
@@ -388,9 +388,9 @@ declare enum Enum {
 
 ## Type Compatibility
 
-	* Type compatibility in TypeScript is based on structural subtyping (!!!TypeScript is a structural type system!!!)
-    * In TypeScript, there are two kinds of compatibility: subtype and assignment. (Different places in the language use one of the two compatibility mechanisms)
-	* nominally-typed languages: C# or Java will give errors in typescript code like:
+* Type compatibility in TypeScript is based on structural subtyping (!!!TypeScript is a structural type system!!!)
+* In TypeScript, there are two kinds of compatibility: subtype and assignment. (Different places in the language use one of the two compatibility mechanisms)
+* nominally-typed languages: C# or Java will give errors in typescript code like:
 ```
 interface Named {
   name: string;
@@ -406,7 +406,7 @@ p = new Person();
 ```
     ...because the Person class does not explicitly describe itself as being an implementer of the Named interface. TypeScript’s structural type system was designed based on how JavaScript code is typically written. Because JavaScript widely uses anonymous objects like function expressions and object literals, it’s much more natural to represent the kinds of relationships found in JavaScript libraries with a structural type system instead of a nominal one.
 
-	* The basic rule for TypeScript’s structural type system is that x is compatible with y if y has at least the same members as x. For example:
+* The basic rule for TypeScript’s structural type system is that x is compatible with y if y has at least the same members as x. For example:
 
 ```
 interface Named {
