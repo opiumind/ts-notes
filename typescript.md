@@ -39,7 +39,7 @@
 ## Interfaces
 
 * Readonly properties
-* ReadonlyArray<T>
+* `ReadonlyArray<T>`
 * ! Variables use const whereas properties use readonly
 
 ```
@@ -337,7 +337,7 @@ enum E {
 		- The enum member is initialized with a constant enum expression
 		- It is a compile time error for constant enum expressions to be evaluated to NaN or Infinity
 * In all other cases enum member is considered computed
-* keyof with enums:
+* `keyof` with enums:
 ```
 enum LogLevel {
     ERROR, WARN, INFO, DEBUG
@@ -484,15 +484,15 @@ let reverse = function <U>(y: U): U {
 identity = reverse; // OK, because (x: any) => any matches (y: any) => any
 ```
 * Table of type compatibility https://www.typescriptlang.org/docs/handbook/type-compatibility.html
-- - Everything is assignable to itself.
-- - any and unknown are the same in terms of what is assignable to them, different in that unknown is not assignable to anything except any.
-- - unknown and never are like inverses of each other. Everything is assignable to unknown, never is assignable to everything. Nothing is assignable to never, unknown is not assignable to anything (except any).
-- - void is not assignable to or from anything, with the following exceptions: any, unknown, never, undefined, and null
+- - everything is assignable to itself;
+- - any and unknown are the same in terms of what is assignable to them, different in that unknown is not assignable to anything except any;
+- - unknown and never are like inverses of each other. Everything is assignable to unknown, never is assignable to everything. Nothing is assignable to never, unknown is not assignable to anything (except any);
+- - void is not assignable to or from anything, with the following exceptions: any, unknown, never, undefined, and null.
 
 
 ## Advanced Types
 
-* <Type guard> is some expression that performs a runtime check that guarantees the type in some scope.
+* `<Type guard>` is some expression that performs a runtime check that guarantees the type in some scope.
 To define a type guard, we simply need to define a function whose return type is a type predicate:
 ```
 function isFish(pet: Fish | Bird): pet is Fish {
