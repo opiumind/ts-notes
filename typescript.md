@@ -332,10 +332,10 @@ enum E {
 * In a string enum, each member has to be constant-initialized with a string literal, or with another string enum member.
 * Heterogeneous enums. Technically enums can be mixed with string and numeric members, but it’s not clear why you would ever want to do so, don't do so.
 * An enum member is considered constant if:
-		- It is the first member in the enum and it has no initializer, in which case it’s assigned the value 0
-		- It does not have an initializer and the preceding enum member was a numeric constant. In this case the value of the current enum member will be the value of the preceding enum member plus one
-		- The enum member is initialized with a constant enum expression
-		- It is a compile time error for constant enum expressions to be evaluated to NaN or Infinity
+- - It is the first member in the enum and it has no initializer, in which case it’s assigned the value 0
+- - It does not have an initializer and the preceding enum member was a numeric constant. In this case the value of the current enum member will be the value of the preceding enum member plus one
+- - The enum member is initialized with a constant enum expression
+- - It is a compile time error for constant enum expressions to be evaluated to NaN or Infinity
 * In all other cases enum member is considered computed
 * `keyof` with enums:
 ```
@@ -691,7 +691,7 @@ import { SomeType, someFunc } from "./MyThings";
 let x = new SomeType();
 let y = someFunc();
 ```
-- - Use the namespace import pattern if you’re importing a large number of things
+- - Use the namespace import pattern if you’re importing a large number of things:
 ```
 //MyLargeModule.ts
 export class Dog { ... }
@@ -779,13 +779,13 @@ let sq = new polygons.Square(); // Same as 'new Shapes.Polygons.Square()'
 import * as $ from "jquery";
 import { Component } from "@angular/core";
 ```
-* You should use relative imports for your own modules that are guaranteed to maintain their relative location at runtime
-* A non-relative import can be resolved relative to baseUrl, or through path mapping
+* You should use relative imports for your own modules that are guaranteed to maintain their relative location at runtime.
+* A non-relative import can be resolved relative to baseUrl, or through path mapping.
 * There are two possible module resolution strategies: Node and Classic. 
 * You can use the `--moduleResolution` flag to specify the module resolution strategy. If not specified, the default is Node for `--module commonjs`, and Classic otherwise (including when `--module` is set to amd, system, umd, es2015, esnext, etc.).
 * Classic (`import { b } from "./moduleB"`) used to be TypeScript’s default resolution strategy. For non-relative it will search all the way up from the current folder of the file with the import. For relative by standard usual way. 
-* Node resolution (`var x = require("./moduleB");`) for relative resolution: file name -> package.json in the folder -> index.js in the folder 
-* Node resolution for non-relative resolution: all steps above in each directory all the way up
+* Node resolution (`var x = require("./moduleB");`) for relative resolution: file name -> package.json in the folder -> index.js in the folder.
+* Node resolution for non-relative resolution: all steps above in each directory all the way up.
 * Additional module resolution flags:
 - - "baseUrl", informs the compiler where to find modules. Given path is relative, it is computed based on current directory.
 - - "paths", ("baseUrl" must be specified for this flag, "paths" are resolved relative to "baseUrl") location for specific modules:
@@ -803,14 +803,14 @@ import { Component } from "@angular/core";
 ```
 "rootDirs": ["src/views", "generated/templates/views"]
 ```
-* Run `tsc --traceResolution` invoking the compiler to see the log
-* `tsc app.ts moduleA.ts --noResolve` instructs the compiler not to “add” any files to the compilation that were not passed on the command line
+* Run `tsc --traceResolution` invoking the compiler to see the log.
+* `tsc app.ts moduleA.ts --noResolve` instructs the compiler not to “add” any files to the compilation that were not passed on the command line.
 
 
 ## Declaration Merging
 
-* Is a TypeScript concept
-* Means that the compiler merges separate declarations declared with the same name into a single definition
+* Is a TypeScript concept.
+* Means that the compiler merges separate declarations declared with the same name into a single definition.
 * All create Namespace, Type and Value:
 - - Namespace: N, V
 - - Class: T, V
@@ -833,16 +833,16 @@ interface Box {
 let box: Box = { height: 5, width: 6, scale: 10 };
 ```
 * Merging Namespaces. All exported members will be merged
-* Merging Namespaces with Classes: see https://www.typescriptlang.org/docs/handbook/declaration-merging.html. Similarly, namespaces can be used to extend enums with static members
+* Merging Namespaces with Classes: see https://www.typescriptlang.org/docs/handbook/declaration-merging.html. Similarly, namespaces can be used to extend enums with static members.
     
 
 ## JSX
 
-* Is an embeddable XML-like syntax. It is meant to be transformed into valid JavaScript
-* In order to use JSX you must do two things.
+* Is an embeddable XML-like syntax. It is meant to be transformed into valid JavaScript.
+* In order to use JSX you must do two things:
         1) Name your files with a .tsx extension
         2) Enable the jsx option
-* TypeScript ships with three JSX modes: preserve, react, and react-native
+* TypeScript ships with three JSX modes: preserve, react, and react-native:
 - - preserve mode will keep the JSX as part of the output to be further consumed by another transform step (e.g. Babel)
 - - react mode will emit React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file
 - - react-native mode is the equivalent of preserve in that it keeps all JSX, but the output will instead have a .js file
@@ -877,7 +877,7 @@ function ComponentFoo(prop: FooProp) {
 
 ## Mixins
 
-* Another popular way of building up classes from reusable components is to build them by combining simpler partial classes
+* Another popular way of building up classes from reusable components is to build them by combining simpler partial classes.
 * The pattern relies on using Generics with class inheritance to extend a base class.
 
 
@@ -1137,4 +1137,4 @@ const fiveToHex: OmitThisParameter<typeof toHex> = toHex.bind(5);
 
 console.log(fiveToHex());
 ```
-* ThisType<Type> - This utility does not return a transformed type. Instead, it serves as a marker for a contextual this type. Note that the --noImplicitThis flag must be enabled to use this utility
+* ThisType<Type> - This utility does not return a transformed type. Instead, it serves as a marker for a contextual this type. Note that the --noImplicitThis flag must be enabled to use this utility.
